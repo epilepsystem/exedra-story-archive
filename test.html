@@ -1,0 +1,66 @@
+<style>
+.artwork-card {
+    width: 197px;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.artwork-card .rating {
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+}
+
+.portrait {
+    position: relative;
+    width: 197px;
+    height: 140px;
+    margin: 0 auto;
+}
+
+.portrait .artwork {
+    position: absolute;
+    left: 17px;
+    top: 20px;
+    width: 163px;
+    height: 100px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.portrait .frame {
+    position: absolute;
+    inset: 0;
+    width: 197px;
+    height: 140px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.artwork-card .title {
+    margin-top: 8px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.artwork-card .subtitle {
+    font-size: 0.8em;
+    color: #666;
+}
+</style>
+
+<div class="artwork-card">
+    <div class="rating">✦✦✦✦✦</div>
+
+    <div class="portrait">
+        <img
+            class="artwork"
+            src="images/artwork/A_Precarious_Prayer_Portrait_Illustration.png">
+
+        <img
+            class="frame"
+            src="images/frame/Portrait_Frame_Gold.png">
+    </div>
+
+    <div class="title">도박 같은 기도</div>
+    <div class="subtitle" lang="ja">博打的な祈り</div>
+</div>
