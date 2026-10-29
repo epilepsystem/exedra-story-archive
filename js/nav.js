@@ -15,67 +15,75 @@
         toc.remove();
     }
 
-    const headings = content.querySelectorAll(
-        "h1, h2, h3, h4, h5, h6"
-    );
-
     const usedIds = new Set(
         [...document.querySelectorAll("[id]")]
             .map(element => element.id)
             .filter(Boolean)
     );
 
-    const stack = [];
+    const buildToc = () => {
+        // 이전 TOC 내용 제거 (갱신 대응)
+        targetList.textContent = "";
 
-    headings.forEach((heading, index) => {
-        if (!heading.id) {
-            const base = heading.textContent
-                .trim()
-                .toLowerCase()
-                .replace(/[^\p{L}\p{N}]+/gu, "-")
-                .replace(/^-|-$/g, "") || `section-${index + 1}`;
+        const stack = [];
 
-            let id = base;
-            let suffix = 2;
+        content.querySelectorAll("h1, h2, h3, h4, h5, h6")
+            .forEach((heading, index) => {
+                if (!heading.id) {
+                    const base = heading.textContent
+                        .trim()
+                        .toLowerCase()
+                        .replace(/[^\p{L}\p{N}]+/gu, "-")
+                        .replace(/^-|-$/g, "") || `section-${index + 1}`;
 
-            while (usedIds.has(id)) {
-                id = `${base}-${suffix++}`;
-            }
+                    let id = base;
+                    let suffix = 2;
 
-            heading.id = id;
-            usedIds.add(id);
-        }
+                    while (usedIds.has(id)) {
+                        id = `${base}-${suffix++}`;
+                    }
 
-        const level = Number(heading.tagName.substring(1));
-        const li = document.createElement("li");
-        const link = document.createElement("a");
+                    heading.id = id;
+                    usedIds.add(id);
+                }
 
-        link.href = `#${heading.id}`;
-        link.textContent = heading.textContent.trim();
+                const level = Number(heading.tagName.substring(1));
+                const li = document.createElement("li");
+                const link = document.createElement("a");
 
-        li.appendChild(link);
+                link.href = `#${heading.id}`;
+                link.textContent = heading.textContent.trim();
 
-        while (
-            stack.length > 0 &&
-            stack[stack.length - 1].level >= level
-        ) {
-            stack.pop();
-        }
+                li.appendChild(link);
 
-        if (stack.length === 0) {
-            targetList.appendChild(li);
-        } else {
-            const parentLi = stack[stack.length - 1].li;
-            let childList = parentLi.querySelector(":scope > ul");
+                while (
+                    stack.length > 0 &&
+                    stack[stack.length - 1].level >= level
+                ) {
+                    stack.pop();
+                }
 
-            if (!childList) {
-                childList = document.createElement("ul");
-                parentLi.appendChild(childList);
-            }
+                if (stack.length === 0) {
+                    targetList.appendChild(li);
+                } else {
+                    const parentLi = stack[stack.length - 1].li;
+                    let childList = parentLi.querySelector(":scope > ul");
 
-            childList.appendChild(li);
-        }
+                    if (!childList) {
+                        childList = document.createElement("ul");
+                        parentLi.appendChild(childList);
+                    }
 
-        stack.push({ level, li });
-    });
+                    childList.appendChild(li);
+                }
+
+                stack.push({ level, li });
+            });
+    };
+
+    buildToc();
+
+    // 검색 결과 등 JS가 나중에 만든 헤딩 반영용
+    // toc:refresh 이벤트를 document에 발생시키면 TOC를 다시 만든다
+    document.addEventListener("toc:refresh", buildToc);
 })();

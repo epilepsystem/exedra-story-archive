@@ -1,0 +1,203 @@
+---
+layout: layouts/wiki.njk
+permalink: search.html
+title: "검색"
+---
+
+<h2>검색</h2>
+
+<p>
+  검색어를 입력하세요. 등장인물, 카테고리, 본문 내용 순으로 결과를 보여줍니다.
+</p>
+
+<form class="search-form" method="get" action="{{ '/search.html' | url }}">
+  <input
+    type="search"
+    name="q"
+    value=""
+    placeholder="제목, 등장인물, 본문 내용 검색..."
+    aria-label="검색어"
+    autofocus
+  >
+  <button type="submit">검색</button>
+</form>
+
+<div id="search-results" aria-live="polite"></div>
+<div id="search-debug" style="font-size:12px;color:#666;margin:8px 0;border:1px solid #ccc;padding:4px;background:#f9f9f9"></div>
+
+<script>
+(async () => {
+  try {
+    const c = document.querySelector("#search-results");
+    const debug = document.querySelector("#search-debug");
+    const query = (new URLSearchParams(window.location.search).get("q") || "").trim();
+
+    debug.textContent = `query="${query}", loading index...`;
+
+    let data = [];
+    try {
+      const res = await fetch("/js/search-index.json");
+      const json = await res.json();
+      data = json.entries || [];
+    } catch (e) {
+      debug.textContent = `인덱스 로드 실패: ${e.message}`;
+      c.textContent = "검색 인덱스를 불러올 수 없습니다.";
+      return;
+    }
+
+    debug.textContent = `debug: entries=${data.length}, query="${query}"`;
+
+    const highlightedText = (text, q) => {
+      const fragment = document.createDocumentFragment();
+      if (!q) { fragment.appendChild(document.createTextNode(text)); return fragment; }
+      const lower = text.toLowerCase();
+      const needle = q.toLowerCase();
+      let cursor = 0;
+      while (true) {
+        const at = lower.indexOf(needle, cursor);
+        if (at === -1) break;
+        if (at > cursor) fragment.appendChild(document.createTextNode(text.slice(cursor, at)));
+        const mark = document.createElement("strong");
+        mark.className = "search-hit";
+        mark.textContent = text.slice(at, at + needle.length);
+        fragment.appendChild(mark);
+        cursor = at + needle.length;
+      }
+      if (cursor < text.length) fragment.appendChild(document.createTextNode(text.slice(cursor)));
+      return fragment;
+    };
+
+    const matches = (value, q) => value.toLowerCase().includes(q.toLowerCase());
+    const itemLabel = (entry) => (entry.title || entry.id) + (entry.subtitle ? ` — ${entry.subtitle}` : "");
+
+    const storyLink = (entry, q) => {
+      const li = document.createElement("li");
+      if (entry.url) {
+        const link = document.createElement("a");
+        link.href = entry.url;
+        link.appendChild(highlightedText(itemLabel(entry), q));
+        li.appendChild(link);
+      } else {
+        li.classList.add("no-page");
+        li.appendChild(highlightedText(itemLabel(entry) + " (준비 중)", q));
+      }
+      return li;
+    };
+
+    const characterBlocks = (q) => {
+      const groups = new Map();
+      for (const entry of data) {
+        const hit = entry.characters.filter((name) => matches(name, q));
+        if (!hit.length) continue;
+        for (const name of hit) {
+          if (!groups.has(name)) groups.set(name, []);
+          groups.get(name).push(entry);
+        }
+      }
+      const blocks = [];
+      for (const [name, entries] of groups) {
+        const nameLine = document.createElement("div");
+        nameLine.className = "search-character";
+        nameLine.appendChild(highlightedText(name, q));
+        blocks.push(nameLine);
+        const list = document.createElement("ul");
+        list.className = "search-list";
+        for (const entry of entries) list.appendChild(storyLink(entry, q));
+        blocks.push(list);
+      }
+      return blocks;
+    };
+
+    const categoryBlocks = (q) => {
+      const groups = new Map();
+      for (const entry of data) {
+        const hit = entry.categories.filter((name) => matches(name, q));
+        if (!hit.length) continue;
+        for (const name of hit) {
+          if (!groups.has(name)) groups.set(name, []);
+          groups.get(name).push(entry);
+        }
+      }
+      const blocks = [];
+      for (const [name, entries] of groups) {
+        const nameLine = document.createElement("div");
+        nameLine.className = "search-category";
+        nameLine.appendChild(highlightedText(name, q));
+        blocks.push(nameLine);
+        const list = document.createElement("ul");
+        list.className = "search-list";
+        for (const entry of entries) list.appendChild(storyLink(entry, q));
+        blocks.push(list);
+      }
+      return blocks;
+    };
+
+    const textBlocks = (q) => {
+      const blocks = [];
+      const list = document.createElement("ul");
+      list.className = "search-list";
+      let count = 0;
+      for (const entry of data) {
+        const inTitle = matches(itemLabel(entry), q);
+        const inText = (entry.text || "").toLowerCase().includes(q.toLowerCase());
+        if (!inTitle && !inText) continue;
+        const li = storyLink(entry, q);
+        const text = entry.text || "";
+        const at = text.toLowerCase().indexOf(q.toLowerCase());
+        if (at !== -1) {
+          const start = Math.max(0, at - 60);
+          const end = Math.min(text.length, at + q.length + 60);
+          const piece = (start > 0 ? "…" : "") + text.slice(start, end) + (end < text.length ? "…" : "");
+          const span = document.createElement("span");
+          span.className = "search-snippet";
+          span.appendChild(highlightedText(piece, q));
+          li.appendChild(span);
+        }
+        list.appendChild(li);
+        count += 1;
+      }
+      if (count) blocks.push(list);
+      return { blocks, count };
+    };
+
+    const render = () => {
+      c.textContent = "";
+      debug.textContent += ` | chars=0 cats=0 texts=0`;
+      if (!query) { c.textContent = "검색어를 입력하세요."; return; }
+
+      const characters = characterBlocks(query);
+      const categories = categoryBlocks(query);
+      const { blocks: texts, count: textCount } = textBlocks(query);
+      debug.textContent = `debug: entries=${data.length}, query="${query}" | chars=${characters.length}, cats=${categories.length}, texts=${textCount}`;
+
+      if (!characters.length && !categories.length && !textCount) {
+        c.textContent = `'${query}' 에 대한 검색 결과가 없습니다.`;
+        return;
+      }
+
+      const renderGroup = (heading, blocks) => {
+        const section = document.createElement("section");
+        section.className = "search-group";
+        const h3 = document.createElement("h3");
+        h3.appendChild(highlightedText(heading, query));
+        section.appendChild(h3);
+        for (const block of blocks) section.appendChild(block);
+        return section;
+      };
+
+      c.appendChild(renderGroup("등장인물", characters));
+      c.appendChild(renderGroup("카테고리", categories));
+      c.appendChild(renderGroup("포함된 내용", texts));
+      document.dispatchEvent(new Event("toc:refresh"));
+    };
+
+    const input = document.querySelector(".search-form input[name='q']");
+    if (input && query) input.value = query;
+    render();
+  } catch (e) {
+    const c = document.querySelector("#search-results") || document.body;
+    c.textContent = "치명적 오류: " + e.message;
+    console.error("search fatal:", e);
+  }
+})();
+</script>

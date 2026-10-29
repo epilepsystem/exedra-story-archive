@@ -10,6 +10,16 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.ignores.add("index.html");
   eleventyConfig.ignores.add("README.md");
 
+  // 인라인 <script>에 JSON을 안전하게 삽입하기 위한 필터
+  // </script> 및 HTML 종료 패턴을 이스케이프
+  eleventyConfig.addFilter("dump", (value) => {
+    if (value === undefined || value === null) return "null";
+    return JSON.stringify(value)
+      .replace(/</g, "\\u003c")
+      .replace(/>/g, "\\u003e")
+      .replace(/&/g, "\\u0026");
+  });
+
   return {
     dir: {
       input: ".",

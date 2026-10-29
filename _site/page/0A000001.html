@@ -12,6 +12,18 @@
   <header>
     <div class="header-inner">
       <h1>엑세드라 스토리 아카이브</h1>
+
+      <div class="header-search" aria-label="위키 검색">
+        <form method="get" action="/search.html">
+          <input
+            type="search"
+            name="q"
+            placeholder="스토리와 대사 검색..."
+            aria-label="위키 검색어"
+          >
+          <button type="submit">검색</button>
+        </form>
+      </div>
     </div>
   </header>
 
@@ -19,6 +31,7 @@
     <nav aria-label="nav">
       <h2>둘러보기</h2>
       <a href="/">전체 스토리 목록</a>
+      <a href="/search.html">상세 검색</a>
 
       <h2>목차</h2>
       <ul id="auto-toc"></ul>

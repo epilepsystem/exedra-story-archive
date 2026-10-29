@@ -276,3 +276,74 @@ main h3 {
     font-size: 0.8rem;
     color: #72777d;
 }
+
+/* 헤더 제목과 검색창을 한 줄에 배치 */
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.header-search {
+    flex: 0 1 380px;
+    width: 100%;
+    max-width: 380px;
+    min-width: 0;
+}
+
+/* 작은 화면에서는 검색창을 제목 아래에 배치 */
+@media (max-width: 600px) {
+    .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .header-search {
+        max-width: none;
+    }
+}
+
+/* 검색 결과 스타일 */
+.search-group {
+    margin: 1.5rem 0;
+}
+
+.search-group h3 {
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid #a7a7a7;
+}
+
+.search-character,
+.search-category {
+    font-weight: bold;
+    margin: 0.75rem 0 0.25rem;
+}
+
+.search-list {
+    margin: 0 0 1rem 1.5rem;
+    padding: 0;
+}
+
+.search-list li {
+    margin: 0.25rem 0;
+}
+
+.search-list li.no-page {
+    color: #666;
+    font-style: italic;
+}
+
+.search-hit {
+    color: #0645ad;
+}
+
+.search-snippet {
+    font-size: 0.9em;
+    color: #54595d;
+    display: block;
+    margin-top: 0.2rem;
+}

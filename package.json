@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "eleventy --serve",
-    "build": "eleventy --pathprefix=/exedra-kr-story/main/"
+    "build": "eleventy --pathprefix=/exedra-kr-story/ && npx --yes pagefind@1.5.2 --site _site",
+    "preview": "eleventy --pathprefix=/ && npx --yes pagefind@1.5.2 --site _site --serve"
   },
   "keywords": [],
   "author": "",
