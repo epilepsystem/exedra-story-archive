@@ -1,4 +1,4 @@
-{% set story = stories[page.fileSlug] %}
+{% set story = page[page.fileSlug] %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,7 +11,7 @@
 <body>
   <header>
     <div class="header-inner">
-      <h1>마법소녀 마도카☆마기카 Magia Exedra 스토리 아카이브</h1>
+      <h1>엑세드라 스토리 아카이브</h1>
     </div>
   </header>
 
@@ -25,21 +25,24 @@
     </nav>
 
     <main id="article-content">
+      {% if story %}
+      <header class="page-titlebar">
+        <h1 id="firstHeading" class="firstHeading mw-first-heading" lang="ko" dir="ltr"><span class="mw-page-title-main">{{ story.title }}</span></h1>
+        {% if story.subtitle %}<p class="page-subtitle">{{ story.subtitle }}</p>{% endif %}
+      </header>
+      {% endif %}
       {{ content | safe }}
     </main>
   </div>
 
   <footer class="site-footer">
     <div class="site-footer-inner">
-
-      <section id="footer-info">
-        <p>
-          temp
-        </p>
-      </section>
-
+      <nav class="footer-places" aria-label="info">
+        <a href="{{ '/' | url }}">대문</a>
+        <a href="{{ '/page/0A000001.html' | url }}">면책 조항</a>
+      </nav>
       <p class="footer-bottom">
-        마법소녀 마도카☆마기카 Magia Exedra 스토리
+        마법소녀 마도카☆마기카 Magia Exedra 스토리 아카이브
       </p>
 
     </div>

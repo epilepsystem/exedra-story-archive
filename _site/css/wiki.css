@@ -92,6 +92,88 @@ main h3 {
     padding-left: 24px;
 }
 
+/* 위키 문서 제목바 (미디어위키 vector-page-titlebar 스타일) */
+.page-titlebar {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: baseline;
+    column-gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #a2a9b1; /* 일반 header의 1px 테두리를 2px로 재정의 */
+}
+
+.page-titlebar .firstHeading {
+    margin: 0;
+    font-size: 1.9em; /* 기존 header h1(1.6em)보다 크게 */
+    font-weight: normal;
+    line-height: 1.3;
+}
+
+.page-titlebar .page-subtitle {
+    margin: 0;
+    color: #54595d;
+    font-size: 0.95em;
+}
+
+/* 아트워크 카드 (틀: components/artwork-card.njk) */
+.artwork-box {
+    display: table;
+    margin: 12px auto;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.artwork-card {
+    --card-scale: 2; /* 사진/프레임 배율 (카드 전체 너비도 이 값에 맞춰 확장됨) */
+    width: calc(197px * var(--card-scale));
+    text-align: center;
+}
+
+.artwork-card .rating {
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+}
+
+.artwork-card .portrait {
+    position: relative;
+    width: calc(197px * var(--card-scale));
+    height: calc(140px * var(--card-scale));
+    margin: 0 auto;
+}
+
+.artwork-card .portrait .artwork {
+    position: absolute;
+    left: calc(17px * var(--card-scale));
+    top: calc(20px * var(--card-scale));
+    width: calc(163px * var(--card-scale));
+    height: calc(100px * var(--card-scale));
+    object-fit: cover;
+    z-index: 1;
+}
+
+.artwork-card .portrait .frame {
+    position: absolute;
+    inset: 0;
+    width: calc(197px * var(--card-scale));
+    height: calc(140px * var(--card-scale));
+    z-index: 2;
+    pointer-events: none;
+}
+
+.artwork-card .title {
+    margin-top: 9px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.artwork-card .subtitle {
+    font-size: 0.9em;
+    color: #666;
+}
+
 /* 위키피디아식 오른쪽 썸네일 박스 */
 .thumb-wrap {
     display: flow-root; /* 본문이 썸네일보다 짧아도 박스가 div 밖으로 삐져나오지 않게 함 */

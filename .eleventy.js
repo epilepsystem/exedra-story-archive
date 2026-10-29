@@ -17,5 +17,9 @@ module.exports = function (eleventyConfig) {
       data: "wiki-src/_data",
       output: "_site",
     },
+
+    // .html 파일도 Nunjucks 문법/include/매크로를 그대로 사용할 수 있게 함
+    // (스토리 .html에서 .njk 틀을 바로 import할 수 있음)
+    htmlTemplateEngine: "njk",
   };
 };

@@ -1,0 +1,44 @@
+{# 아트워크 카드 틀 (원본: main/test.html)
+   사용법:
+     {% from "components/portraits.njk" import artworkCard %}
+     {{ artworkCard({ rating: 5, image: "/images/artwork/sorana magica.png", frame: "gold", title: "제목", ja: "일본어" }) }}
+
+   파라미터:
+     rating : 숫자(성인수 개수) 또는 문자열(직접 표기, 예: "✦✦✦✦✦✦")
+     image  : 아트워크 이미지 경로 (url 필터로 prefix 자동 처리)
+     frame  : "gold" | "silver" | 직접 경로 | null(프레임 없음)
+     title  : 한국어 이름
+     ja     : 일본어 이름
+#}
+{% macro artworkCard(opts) %}
+{%- set rating = opts.rating if "rating" in opts else 5 %}
+{%- set frame = opts.frame if "frame" in opts else "gold" %}
+{%- set image = opts.image if "image" in opts else "" %}
+{%- set title = opts.title if "title" in opts else "" %}
+{%- set ja = opts.ja if "ja" in opts else "" %}
+{%- set framePaths = {
+  "gold": "/images/frame/Portrait_Frame_Gold.png",
+  "silver": "/images/frame/Portrait_Frame_Silver.png"
+} %}
+<div class="artwork-box">
+  <div class="artwork-card">
+    <div class="rating" aria-label="랭킹 {{ rating }}">
+      {%- if rating is string -%}
+        {{ rating }}
+      {%- else -%}
+        {% for i in range(1, rating + 1) %}✦{% endfor %}
+      {%- endif -%}
+    </div>
+
+    {% if image %}
+    <div class="portrait">
+      <img class="artwork" src="{{ image | url }}" alt="{{ title }}">
+      {% if frame %}<img class="frame" src="{{ (framePaths[frame] or frame) | url }}" alt="">{% endif %}
+    </div>
+    {% endif %}
+
+    {% if title %}<div class="title">{{ title }}</div>{% endif %}
+    {% if ja %}<div class="subtitle" lang="ja">{{ ja }}</div>{% endif %}
+  </div>
+</div>
+{% endmacro %}

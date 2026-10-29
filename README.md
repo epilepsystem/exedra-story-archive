@@ -1,17 +1,19 @@
 # Naming
 
 ID 형식은 다음과 같다:
-`종류(1자)` + `대분류(2자)` + `스토리(2자)` + `버전(1자)`
+`종류(2자)` + `대분류(2자)` + `스토리(2자)` + `버전(2자)`
 
 ## 형식
 ### 종류
 | 문자 | 의미 |
 |---|---|
-| `A` | Temp |
-| `M` | Main Quest Stories |
-| `X` | Exedra Quest Stories |
-| `E` | Event Stories |
-| `G` | Magical Girl Stories |
+| `0T` | Temp |
+| `1M` | Main Quest Stories |
+| `2X` | Exedra Quest Stories |
+| `3E` | Event Stories |
+| `4G` | Magical Girl Stories |
+
+정렬과 식별을 편하게 하기 위함.
 
 ### 대분류
 종류에 따라, `시리즈`, `연도`, `이름`이 된다.
@@ -117,6 +119,6 @@ ID 형식은 다음과 같다:
 
 | 수 | 의미 |
 |---|---|
-| `0` | 해당 사항 없음 |
-| `1` | 일반 |
-| `2` | 나이트메어 |
+| `00` | 해당 사항 없음 |
+| `1S` | 일반(Standard) |
+| `2N` | 나이트메어(Nightmare) |
