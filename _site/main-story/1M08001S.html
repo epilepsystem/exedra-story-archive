@@ -5,21 +5,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/css/wiki.css">
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="/images/branding/favicon.svg">
+  <link
+    rel="icon"
+    href="/images/site/favicon.ico"
+    sizes="any">
   <script src="/js/nav.js" defer></script>
 </head>
 
 <body>
-  <header>
+  <header class="site-header">
     <div class="header-inner">
-      <h1>엑세드라 스토리 아카이브</h1>
+      <div class="site-branding">
+        <a class="site-logo" href="/">
+          <img
+            src="/images/site/logo.svg"
+            alt="">
+        </a>
+
+        <a class="site-title" href="/">
+          엑세드라 스토리 아카이브
+        </a>
+      </div>
 
       <div class="header-search" aria-label="위키 검색">
         <form method="get" action="/search.html">
           <input
             type="search"
             name="q"
-            aria-label="위키 검색어"
-          >
+            aria-label="위키 검색어">
           <button type="submit">검색</button>
         </form>
       </div>
