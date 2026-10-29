@@ -1,0 +1,48 @@
+{% set story = stories[page.fileSlug] %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ '/css/wiki.css' | url }}">
+  <script src="{{ '/js/nav.js' | url }}" defer></script>
+</head>
+
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>마법소녀 마도카☆마기카 Magia Exedra 스토리 아카이브</h1>
+    </div>
+  </header>
+
+  <div id="layout">
+    <nav aria-label="nav">
+      <h2>둘러보기</h2>
+      <a href="{{ '/' | url }}">전체 스토리 목록</a>
+
+      <h2>목차</h2>
+      <ul id="auto-toc"></ul>
+    </nav>
+
+    <main id="article-content">
+      {{ content | safe }}
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+
+      <section id="footer-info">
+        <p>
+          temp
+        </p>
+      </section>
+
+      <p class="footer-bottom">
+        마법소녀 마도카☆마기카 Magia Exedra 스토리
+      </p>
+
+    </div>
+  </footer>
+</body>
+</html>

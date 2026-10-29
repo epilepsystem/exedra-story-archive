@@ -1,14 +1,10 @@
-
 (() => {
     const content = document.querySelector("#article-content");
     const toc = document.querySelector("#auto-toc");
 
     if (!content || !toc) return;
 
-    // 목차가 다른 li 안에 중첩되어 있다면
-    // 그 li의 상위 ul에 항목을 추가합니다.
     let targetList = toc;
-
     const parentItem = toc.parentElement;
 
     if (
@@ -19,17 +15,19 @@
         toc.remove();
     }
 
-    const headings = content.querySelectorAll("h3");
+    const headings = content.querySelectorAll(
+        "h1, h2, h3, h4, h5, h6"
+    );
 
-    // 문서에서 이미 사용 중인 id를 수집합니다.
     const usedIds = new Set(
         [...document.querySelectorAll("[id]")]
             .map(element => element.id)
             .filter(Boolean)
     );
 
+    const stack = [];
+
     headings.forEach((heading, index) => {
-        // 제목에 id가 없으면 자동으로 생성합니다.
         if (!heading.id) {
             const base = heading.textContent
                 .trim()
@@ -48,7 +46,7 @@
             usedIds.add(id);
         }
 
-        // h3마다 li와 링크를 생성합니다.
+        const level = Number(heading.tagName.substring(1));
         const li = document.createElement("li");
         const link = document.createElement("a");
 
@@ -56,6 +54,28 @@
         link.textContent = heading.textContent.trim();
 
         li.appendChild(link);
-        targetList.appendChild(li);
+
+        while (
+            stack.length > 0 &&
+            stack[stack.length - 1].level >= level
+        ) {
+            stack.pop();
+        }
+
+        if (stack.length === 0) {
+            targetList.appendChild(li);
+        } else {
+            const parentLi = stack[stack.length - 1].li;
+            let childList = parentLi.querySelector(":scope > ul");
+
+            if (!childList) {
+                childList = document.createElement("ul");
+                parentLi.appendChild(childList);
+            }
+
+            childList.appendChild(li);
+        }
+
+        stack.push({ level, li });
     });
 })();

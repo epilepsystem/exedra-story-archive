@@ -74,6 +74,11 @@ main h2 {
     font-weight: normal;
 }
 
+main img {
+    max-width: 100%;
+    height: auto;
+}
+
 main h3 {
     margin-top: 24px;
     padding-bottom: 3px;
@@ -87,7 +92,38 @@ main h3 {
     padding-left: 24px;
 }
 
+/* 위키피디아식 오른쪽 썸네일 박스 */
+.thumb-wrap {
+    display: flow-root; /* 본문이 썸네일보다 짧아도 박스가 div 밖으로 삐져나오지 않게 함 */
+}
+
+.thumb {
+    float: right;
+    width: 260px;
+    margin: 0 0 12px 20px;
+    border: 1px solid #c8ccd1;
+    background: #f8f9fa;
+    padding: 4px;
+    font-size: 0.9em;
+}
+
+.thumb img {
+    display: block;
+    margin: 0 auto;
+}
+
+.thumb figcaption {
+    padding: 6px 4px 0;
+    color: #54595d;
+    text-align: center;
+}
+
 @media (max-width: 600px) {
+    .thumb {
+        float: none;
+        margin: 0 auto 12px;
+    }
+
     #layout {
         gap: 16px;
         padding: 16px 12px;
@@ -101,4 +137,60 @@ main h3 {
     header {
         padding: 12px;
     }
+}
+
+.site-footer {
+    margin-top: 2rem;
+    border-top: 1px solid #a7a7a7;
+    color: #54595d;
+    font-size: 0.9rem;
+}
+
+.site-footer-inner {
+    max-width: 1200px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 1.25rem 1rem 1.5rem;
+}
+
+.site-footer section {
+    margin-bottom: 1.25rem;
+}
+
+.site-footer h2 {
+    margin: 0 0 0.5rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid #eaecf0;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.site-footer p {
+    margin: 0.4rem 0;
+    line-height: 1.6;
+}
+
+.footer-places {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #eaecf0;
+}
+
+.site-footer a {
+    color: #0645ad;
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}
+
+.site-footer .footer-bottom {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #eaecf0;
+    font-size: 0.8rem;
+    color: #72777d;
 }

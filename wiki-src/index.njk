@@ -1,0 +1,142 @@
+<h2>환영합니다</h2>
+
+<p>
+  마법소녀 마도카☆마기카 Magia Exedra 스토리의 한국어 번역본을 저장합니다.
+</p>
+
+<h2 id="main">메인 퀘스트 스토리</h2>
+
+<div>
+    <h3>마법소녀 마도카☆마기카</h3>
+    <div>
+        <ul class="category-list">
+        {% for id, story in stories %}
+            {% if id.startsWith("M" ~ "00") %}
+            <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+
+    <h3>마기아 레코드 마법소녀 마도카☆마기카 외전</h3>
+    <div>
+        <ul class="category-list">
+        {% for id, story in stories %}
+            {% if id.startsWith("M" ~ "01") %}
+            <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+
+    <h3>마법소녀 오리코☆마기카</h3>
+    <div>
+        <ul class="category-list">
+        {% for id, story in stories %}
+            {% if id.startsWith("M" ~ "02") %}
+            <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+
+    <h3>마법소녀 마도카☆마기카 Scene0</h3>
+    <div>
+        <ul class="category-list">
+        {% for id, story in stories %}
+            {% if id.startsWith("M" ~ "03") %}
+            <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+
+    <h3>마법소녀 마도카☆마기카 [마수편]</h3>
+    <div>
+        <ul class="category-list">
+        {% for id, story in stories %}
+            {% if id.startsWith("M" ~ "04") %}
+            <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+
+    <h3>마기아 레코드 마법소녀 마도카☆마기카 외전 Crescent Memoria</h3>
+    <div class="thumb-wrap">
+        <figure class="thumb">
+            <img src="{{ '/images/artwork/Crescent_Memoria_Keyvisual.png' | url }}" alt="crescent memoria">
+            <figcaption>マギアレコード 魔法少女まどか☆マギカ外伝 Crescent Memoria</figcaption>
+        </figure>
+
+        <ul class="category-list">
+        {% for id, story in stories %}
+            {% if id.startsWith("M" ~ "05") %}
+            <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+
+    <h3>극장판 마법소녀 마도카☆마기카 [신편] 반역의 이야기</h3>
+    <div>
+        <ul class="category-list">
+        {% for id, story in stories %}
+            {% if id.startsWith("M" ~ "06") %}
+            <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+
+    <h3>마법소녀 타루토☆마기카 The Legend of Jeanne d'Arc</h3>
+    <div>
+        <ul class="category-list">
+        {% for id, story in stories %}
+            {% if id.startsWith("M" ~ "07") %}
+            <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+
+    <h3>마법소녀 소라나☆마기카 Our Fates, Our Future</h3>
+    <div class="thumb-wrap">
+        <figure class="thumb">
+            <img src="{{ '/images/artwork/sorana magica.png' | url }}" alt="sorana magica">
+            <figcaption>魔法少女そらな☆マギカ ～Our Fates, Our Futures～</figcaption>
+        </figure>
+        
+        <ul class="category-list">
+        {% for id, story in stories %}
+            {% if id.startsWith("M" ~ "08") %}
+            <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+            {% endif %} {% endfor %}
+        </ul>
+    </div>
+</div>
+<br>
+
+<h2 id="exedra">엑세드라 퀘스트 스토리</h2>
+<ul class="category-list">
+  {% for id, story in stories %}
+    {% if id.startsWith("X") %}
+      <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+    {% endif %} {% endfor %}
+</ul>
+<br>
+
+<h2 id="event">이벤트 스토리</h2>
+<div>
+    <h3 id="event-date25">2025년</h3>
+    <ul class="category-list">
+    {% for id, story in stories %}
+        {% if id.startsWith("E" ~ "25") %}
+        <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+        {% endif %} {% endfor %}
+    </ul>
+</div>
+<div>
+    <h3 id="event-date25">2026년</h3>
+    <ul class="category-list">
+    {% for id, story in stories %}
+        {% if id.startsWith("E" ~ "26") %}
+        <li><a href="{{ ('/main-story/' ~ id ~ '.html') | url }}">{{ story.title }}</a></li>
+        {% endif %} {% endfor %}
+    </ul>
+</div>
+
+<h2 id="magical-girl">마법소녀 스토리</h2>
+<p>마법소녀 스토리는 추후 연결합니다.</p>

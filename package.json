@@ -1,0 +1,17 @@
+{
+  "name": "main",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "eleventy --serve",
+    "build": "eleventy --pathprefix=/exedra-kr-story/main/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.7"
+  }
+}
