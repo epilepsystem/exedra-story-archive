@@ -11,3 +11,13 @@ GitHub Pages 이용
 
 ## Special Thanks
 - Puella Magi Wiki
+
+## portrait 삽입
+```
+{% from "components/portraits.njk" import artworkCard %}
+{{ artworkCard({
+	rating: number,
+	image: "path",
+	frame: "type",
+	title: "korean", ja: "japanese" }) }}
+```

@@ -1,0 +1,5 @@
+# Generated files
+_site/
+
+# Large video files
+*.mp4
